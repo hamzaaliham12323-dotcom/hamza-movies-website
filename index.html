@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CineVerse - 3D Movie App</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <nav>
+        <div class="logo">Movie<span style="color:var(--neon)">Verse</span></div>
+        <div class="search-container">
+            <input type="text" id="searchBox" placeholder="Search worldwide movies...">
+        </div>
+    </nav>
+
+    <div class="container">
+        
+        <h2 id="genreTitle">Trending Movies </h2>
+        
+        <div id="tags" class="tags-container"></div>
+        
+        <div id="movieGrid" class="movie-grid"></div>
+        
+        <div class="pagination">
+            <button id="loadMore" class="load-more-btn">Load More</button>
+        </div>
+        
+    </div> 
+
+    <footer>
+        <div class="footer-content">
+            <p>Designed for <span class="highlight">MovieVerse</span></p>
+            <p class="copyright">© 2025 Hamza Ikram. All rights reserved.</p>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-github"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <div id="videoOverlay" class="video-overlay">
+        <div class="video-box">
+            <span class="close-btn" onclick="closeTrailer()">&times;</span>
+            <div id="videoContainer" class="video-content"></div>
+            
+            <div id="trailerError" class="no-trailer hidden">
+                <i class="fas fa-video-slash"></i>
+                <h3>Trailer Not Available</h3>
+                <p>We couldn't find a trailer for this movie.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

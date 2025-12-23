@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Details - MovieVerse</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body id="movieDetails">
+
+    <nav>
+        <div class="logo" onclick="window.location.href='index.html'">Movie<span style="color:var(--neon)">Verse</span></div>
+    </nav>
+
+    <div class="hero">
+        <div class="hero-content">
+            <h1 id="title" class="hero-title">Loading...</h1>
+            <p id="tagline" class="hero-tagline"></p>
+            
+            <div class="action-bar">
+                <button onclick="openTrailer()" class="trailer-btn">
+                    <i class="fas fa-play"></i> Watch Trailer
+                </button>
+                <div class="movie-info-row">
+                    <span id="rate" class="info-badge rating-badge"><i class="fas fa-star"></i> ...</span>
+                    <span id="date" class="info-badge"><i class="fas fa-calendar-alt"></i> ...</span>
+                    <span id="runtime" class="info-badge"><i class="fas fa-clock"></i> ...</span>
+                    <span id="genres" class="info-badge genre-badge">...</span>
+                </div>
+            </div>
+
+            <h3 class="plot-title">The Plot</h3>
+            <p id="overview" class="plot-text">Fetching movie details...</p>
+            
+            <div class="back-link-wrapper">
+                <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to list</a>
+            </div>
+        </div>
+
+        <div class="poster-container">
+            <img id="poster3d" src="" alt="Movie Poster">
+        </div>
+    </div>
+
+    <h3 class="section-title">Top Cast</h3>
+    <div id="castContainer" class="cast-container"></div>
+
+  <div class="stats-container">
+        <div class="stat-box">
+            <h4><i class="fas fa-money-bill-wave icon-budget"></i> Budget</h4>
+            <p id="budget">...</p>
+        </div>
+        <div class="stat-box">
+            <h4><i class="fas fa-chart-line icon-revenue"></i> Revenue</h4>
+            <p id="revenue">...</p>
+        </div>
+        <div class="stat-box">
+            <h4><i class="fas fa-info-circle icon-status"></i> Status</h4>
+            <p id="status">...</p>
+        </div>
+    </div>
+
+    <h3 class="section-title">You Might Also Like</h3>
+    <div id="similarContainer" class="cast-container similar-movies-wrapper"></div>
+
+    <h3 class="section-title">User Reviews</h3>
+    <div id="reviewsContainer" class="reviews-container"></div>
+
+   
+
+    <footer>
+        <div class="footer-content">
+            <p>Designed for <span class="highlight">MovieVerse</span></p>
+            <p class="copyright">© 2025 Hamza Ikram. All rights reserved.</p>
+            <div class="social-links">
+                <a href="https://github.com/hamzaaliham12323-dotcom" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/hamza-ikram-5b069639b" target="_blank"><i class="fab fa-linkedin"></i></a>
+                <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+    </footer>
+     <div id="videoOverlay" class="video-overlay">
+        <div class="video-box">
+            <span class="close-btn" onclick="closeTrailer()">&times;</span>
+            
+            <div id="videoContainer" class="video-content"></div>
+
+            <div id="trailerError" class="no-trailer hidden">
+                <i class="fas fa-video-slash"></i>
+                <h3>Trailer Not Available</h3>
+                <p>Sorry, the studio hasn't released a trailer yet.</p>
+                <p class="wait-text">Please check back later!</p>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

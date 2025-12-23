@@ -1,0 +1,314 @@
+/* 1. GLOBAL VARIABLES & RESET */
+:root {
+    --primary: #e50914; /* Netflix Red */
+    --dark: #141414;    /* Deep Black */
+    --light: #f5f5f5;
+    --glass: rgba(255, 255, 255, 0.1);
+    --neon: #00f2ff;    /* Cyan Neon */
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+
+body {
+    background-color: var(--dark); color: var(--light);
+    overflow-x: hidden;
+}
+
+/* 2. NAVBAR */
+nav {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 20px 50px; background: rgba(0,0,0,0.8);
+    backdrop-filter: blur(10px); position: sticky; top: 0;
+    z-index: 100; border-bottom: 1px solid var(--glass);
+    box-shadow: 0 4px 30px rgba(0,0,0,0.5);
+}
+
+.logo { 
+    font-size: 1.5rem; font-weight: bold; color: var(--primary); 
+    text-transform: uppercase; letter-spacing: 2px; cursor: pointer; 
+}
+
+/* Search Bar */
+.search-container { position: relative; }
+
+input#searchBox {
+    background: var(--glass); border: 1px solid var(--glass);
+    padding: 10px 20px; border-radius: 30px;
+    color: white; width: 300px; transition: 0.4s;
+}
+
+input#searchBox:focus {
+    width: 400px; box-shadow: 0 0 15px var(--neon);
+    border-color: var(--neon); outline: none;
+}
+
+/* 3. FILTERS (TAGS) */
+.container { padding: 40px 50px; }
+
+.tags-container {
+    display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 40px; 
+    justify-content: center; padding: 0 20px;
+}
+
+.tag {
+    color: white; padding: 10px 25px; border-radius: 50px; cursor: pointer;
+    font-size: 0.95rem; font-weight: 500; letter-spacing: 0.5px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px); transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.tag:hover {
+    transform: translateY(-3px); border-color: var(--neon);
+    background: rgba(0, 242, 255, 0.1);
+    box-shadow: 0 5px 15px rgba(0, 242, 255, 0.15);
+}
+
+.tag.active {
+    background: linear-gradient(135deg, var(--neon), #00aaff);
+    color: black; font-weight: bold; border-color: transparent;
+    box-shadow: 0 0 25px rgba(0, 242, 255, 0.5); transform: scale(1.05);
+}
+
+/* Gold Theme Tag */
+.tag-special { border-color: #ffd700 !important; }
+
+.tag-special:hover {
+    background: rgba(255, 215, 0, 0.1) !important;
+    box-shadow: 0 5px 15px rgba(255, 215, 0, 0.2) !important;
+}
+
+.tag-special.active {
+    background: linear-gradient(135deg, #ffd700, #ff8c00) !important;
+    box-shadow: 0 0 25px rgba(255, 215, 0, 0.6) !important;
+}
+
+/* 4. MOVIE GRID */
+.movie-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); 
+    gap: 30px; perspective: 1000px;
+}
+
+.movie-card {
+    background: #1f1f1f; border-radius: 15px; overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer; transform-style: preserve-3d;
+}
+
+.movie-card:hover {
+    transform: translateY(-10px) rotateX(5deg);
+    box-shadow: 0 20px 40px rgba(0, 242, 255, 0.2);
+}
+
+.movie-card img { width: 100%; height: 300px; object-fit: cover; }
+.movie-info { padding: 15px; }
+.movie-info h3 { font-size: 1rem; margin-bottom: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.rating { color: var(--neon); font-size: 0.9rem; font-weight: bold; }
+
+/* Skeleton Loading */
+.skeleton {
+    background: #222; border-radius: 15px; position: relative; 
+    overflow: hidden; height: 380px;
+}
+
+.skeleton::after {
+    content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    transform: translateX(-100%);
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+    animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer { 100% { transform: translateX(100%); } }
+
+/* Load More Button */
+.pagination { display: flex; justify-content: center; margin-top: 40px; }
+
+.load-more-btn {
+    background: transparent; color: var(--neon); border: 2px solid var(--neon);
+    padding: 12px 40px; font-size: 1.1rem; border-radius: 30px; 
+    cursor: pointer; transition: 0.3s; font-weight: bold; letter-spacing: 1px;
+}
+
+.load-more-btn:hover { background: var(--neon); color: black; box-shadow: 0 0 20px var(--neon); }
+
+/* No Results Box */
+.no-results {
+    grid-column: 1 / -1; width: 100%; max-width: 600px; margin: 0 auto 30px auto;
+    text-align: center; padding: 40px; background: rgba(255, 255, 255, 0.05);
+    border-radius: 20px; border: 1px dashed rgba(255, 255, 255, 0.2);
+}
+.no-results i { font-size: 3rem; color: var(--neon); margin-bottom: 15px; }
+.no-results h2 { font-size: 1.5rem; color: white; margin-bottom: 5px; }
+.no-results p { color: #bbb; font-size: 0.9rem; }
+
+/* 5. DETAILS PAGE */
+.hero {
+    height: 85vh; background-size: cover; background-position: center;
+    position: relative; display: flex; align-items: center; 
+    justify-content: space-between; padding: 0 100px;
+}
+
+.hero::after {
+    content: ''; position: absolute; top:0; left:0; width:100%; height:100%;
+    background: linear-gradient(to top, var(--dark), transparent);
+}
+
+.hero-content {
+    position: relative; z-index: 2; max-width: 55%;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+}
+.hero-title { font-size: 3.5rem; margin-bottom: 5px; line-height: 1.1; }
+.hero-tagline { font-style: italic; color: var(--neon); margin-bottom: 25px; font-size: 1.1rem; opacity: 0.9; }
+
+/* Action Bar */
+.action-bar { display: flex; align-items: center; gap: 20px; margin-bottom: 30px; flex-wrap: wrap; }
+
+.trailer-btn {
+    background: white; color: black; border: none; padding: 12px 25px;
+    font-size: 1rem; font-weight: bold; border-radius: 50px; cursor: pointer;
+    transition: all 0.3s ease; display: flex; align-items: center; gap: 10px;
+}
+.trailer-btn:hover { transform: scale(1.05); box-shadow: 0 0 30px rgba(255, 255, 255, 0.6); }
+
+/* Badges */
+.movie-info-row { display: flex; align-items: center; gap: 15px; flex-wrap: wrap; }
+
+.info-badge {
+    font-size: 0.9rem; color: #eee; display: flex; align-items: center; gap: 6px;
+    background: rgba(0, 0, 0, 0.6); padding: 6px 12px; border-radius: 8px;
+    backdrop-filter: blur(4px); border: 1px solid rgba(255,255,255,0.1);
+}
+.rating-badge { color: #FFD700; border-color: rgba(255, 215, 0, 0.4); font-weight: bold; }
+.genre-badge { color: var(--neon); border-color: var(--neon); font-weight: 500; }
+
+.plot-title { color: #ddd; font-size: 1.2rem; margin-bottom: 10px; text-transform: uppercase; }
+.plot-text { color: #ccc; line-height: 1.7; max-width: 600px; font-size: 1rem; margin-bottom: 20px; }
+
+.back-link { color: white; text-decoration: none; font-size: 0.9rem; opacity: 0.7; transition: 0.3s; display: inline-flex; align-items: center; gap: 8px; }
+
+/* 3D Poster */
+.poster-container { width: 300px; height: 450px; perspective: 1000px; position: relative; z-index: 5; }
+
+#poster3d { 
+    width: 100%; height: 100%; border-radius: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.8); 
+    transition: transform 0.1s ease-out; transform-style: preserve-3d; 
+    object-fit: cover; border: 2px solid var(--glass); 
+}
+
+/* Stats Box */
+.stats-container { display: flex; justify-content: center; gap: 30px; padding: 30px 50px; margin: 20px 0; flex-wrap: wrap; }
+
+.stat-box { 
+    background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); 
+    padding: 20px 40px; border-radius: 15px; text-align: center; 
+    min-width: 150px; transition: 0.3s; 
+}
+.stat-box:hover { background: rgba(255, 255, 255, 0.1); transform: translateY(-5px); border-color: var(--neon); }
+.stat-box h4 { font-size: 0.9rem; color: #bbb; margin-bottom: 5px; text-transform: uppercase; }
+.stat-box p { font-size: 1.2rem; font-weight: bold; color: white; }
+
+/* Colorful Icons */
+.icon-budget { color: #00ff88; filter: drop-shadow(0 0 5px rgba(0, 255, 136, 0.5)); margin-right: 8px; }
+.icon-revenue { color: #00f2ff; filter: drop-shadow(0 0 5px rgba(0, 242, 255, 0.5)); margin-right: 8px; }
+.icon-status { color: #ff0055; filter: drop-shadow(0 0 5px rgba(255, 0, 85, 0.5)); margin-right: 8px; }
+
+/* 6. SECTIONS (CAST & REVIEWS) */
+.section-title { margin: 40px 50px 20px 50px; font-size: 1.5rem; border-left: 5px solid var(--neon); padding-left: 15px; }
+
+.cast-container { 
+    display: flex; overflow-x: auto; gap: 20px; padding: 20px 50px 40px 50px; 
+    scroll-behavior: smooth; 
+}
+.cast-container::-webkit-scrollbar { height: 8px; }
+.cast-container::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
+
+.cast-card { 
+    min-width: 120px; text-align: center; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); 
+    position: relative; cursor: pointer; 
+}
+.cast-card:hover { transform: translateY(-10px) scale(1.05); }
+
+.cast-card img { 
+    width: 100px; height: 100px; border-radius: 50%; object-fit: cover; 
+    border: 2px solid var(--primary); margin-bottom: 10px; 
+    transition: all 0.3s ease; box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+}
+
+.similar-movies-wrapper .cast-card img { width: 130px; height: 195px; border-radius: 10px; }
+
+.cast-card:hover img { border-color: var(--neon); box-shadow: 0 0 20px var(--neon); }
+.cast-card:hover .cast-name, .cast-card:hover .similar-movie-title { color: var(--neon); font-weight: bold; }
+
+.cast-name { font-size: 0.9rem; color: white; }
+.character-name { font-size: 0.8rem; color: #bbb; }
+
+.reviews-container { 
+    padding: 0 50px 50px 50px; display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; 
+}
+.review-card { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); padding: 20px; border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.1); }
+.review-header { display: flex; justify-content: space-between; margin-bottom: 10px; color: var(--neon); font-weight: bold; }
+.review-text { font-size: 0.9rem; line-height: 1.5; color: #ddd; max-height: 100px; overflow: hidden; text-overflow: ellipsis; }
+
+/* 7. TRAILER MODAL (FIXED) */
+.video-overlay {
+    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+    background: rgba(0, 0, 0, 0.9); display: flex; justify-content: center; align-items: center;
+    z-index: 20000; opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+}
+.video-overlay.show { opacity: 1; pointer-events: all; }
+
+.video-box {
+    width: 90%; max-width: 700px; aspect-ratio: 16/9;
+    background: #000; border: 2px solid var(--neon); border-radius: 15px;
+    position: relative; box-shadow: 0 0 40px rgba(0, 242, 255, 0.4);
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+}
+
+.close-btn {
+    position: absolute; top: -35px; right: 0; color: white; 
+    font-size: 2rem; cursor: pointer; z-index: 10001; transition: 0.3s;
+}
+.close-btn:hover { color: var(--primary); transform: scale(1.1); }
+
+.video-content { width: 100%; height: 100%; display: block; }
+iframe { width: 100%; height: 100%; border: none; border-radius: 13px; }
+
+.no-trailer { text-align: center; color: white; padding: 20px; }
+.no-trailer i { font-size: 3rem; color: #555; margin-bottom: 10px; }
+.wait-text { color: var(--neon); font-weight: bold; font-size: 0.8rem; margin-top: 10px; text-transform: uppercase; }
+
+/*  8. FOOTER */
+footer {
+    background: rgba(0, 0, 0, 0.95); backdrop-filter: blur(10px); border-top: 1px solid var(--glass);
+    padding: 40px 20px; margin-top: 80px; width: 100vw; margin-left: calc(-50vw + 50%);
+    display: flex; flex-direction: column; align-items: center; text-align: center; position: relative;
+}
+
+footer::before {
+    content: ''; position: absolute; top: 0; left: 20%; width: 60%; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--neon), transparent); box-shadow: 0 0 10px var(--neon);
+}
+
+.footer-content { width: 100%; max-width: 800px; display: flex; flex-direction: column; align-items: center; }
+.footer-content p { color: #888; font-size: 0.9rem; margin-bottom: 10px; }
+.highlight { color: var(--primary); font-weight: bold; letter-spacing: 1px; }
+
+.social-links { margin-top: 15px; display: flex; justify-content: center; gap: 20px; }
+.social-links a {
+    color: white; font-size: 1.2rem; transition: 0.3s; background: rgba(255, 255, 255, 0.05);
+    width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;
+    border-radius: 50%; border: 1px solid transparent;
+}
+.social-links a:hover {
+    color: var(--neon); border-color: var(--neon); transform: translateY(-5px) rotate(360deg); 
+    box-shadow: 0 0 15px var(--neon);
+}
+.hidden { display: none !important; }
+/* --- STYLISH TITLE (Trending Movies) --- */
+#genreTitle {
+    /* ... your existing styles ... */
+    display: block;  width: 100%; clear: both;    
+    font-size: 2rem; font-weight: 800; color: white;  text-transform: uppercase; letter-spacing: 1px;
+    margin-bottom: 20px;  margin-left: 20px; border-left: 5px solid #e50914; padding-left: 15px; text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+}
